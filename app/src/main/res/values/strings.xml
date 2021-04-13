@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">myTalk</string>
+    <string name="kakao_app_key">b5500586bd66eb06aa928d18b9377f5d</string>
 </resources>
