@@ -25,7 +25,7 @@ public class kakaoApi {
     Context mContext;
 
     AppFriendContext context =
-            new AppFriendContext(AppFriendOrder.NICKNAME, 0, 3, "asc");
+            new AppFriendContext(AppFriendOrder.NICKNAME, 0, 100, "asc");
 
     private String myNicname=null;
     private String myProfileImage;
@@ -45,8 +45,9 @@ public class kakaoApi {
         @Override
         public void onSessionOpened() {
             if(myNicname==null){
-                getMyKakaoProfile();
                 getFriendsKakaoProfile();
+                getMyKakaoProfile();
+
             }
         }
 
@@ -77,7 +78,7 @@ public class kakaoApi {
 
                     @Override
                     public void onSuccess(KakaoTalkProfile result) {
-                        Log.i("KAKAO_API", "카카오톡 닉네임: " + result.getNickName());
+                        Log.i("KAKAO_API", "카카오톡 닉네임(api): " + result.getNickName());
                         Log.i("KAKAO_API", "카카오톡 프로필이미지: " + result.getProfileImageUrl());
                         myNicname=result.getNickName();
                         myProfileImage=result.getProfileImageUrl();
@@ -108,18 +109,33 @@ public class kakaoApi {
 
                     @Override
                     public void onSuccess(AppFriendsResponse result) {
+                        Log.i("KAKAO_API", "친구 조회 성공");
 
                         for (AppFriendInfo friend : result.getFriends()) {
-                            Log.i("KAKAO_API", "친구 조회 성공");
 
                             Log.i("KAKAO_API", "친구정보="+friend.toString());
-
                             friends.add(friend.toString());
                             uuid = friend.getUUID();     // 메시지 전송 시 사용
                         }
                     }
                 });
     }
+
+
+    public String getMyNicname(){
+        return myNicname;
+    }
+
+    public String getMyProfileImage(){
+        return myProfileImage;
+    }
+
+    public void getFriend(){
+
+        System.out.println(friends);
+
+    }
+
 
     public void toastMessege(String msg){
         Toast.makeText(mContext,msg, Toast.LENGTH_SHORT).show();

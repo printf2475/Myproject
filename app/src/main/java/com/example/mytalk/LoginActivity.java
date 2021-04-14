@@ -27,6 +27,8 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        nicName=null;
+
         setContentView(R.layout.activity_main);
         sessionCallback = new SessionCallback();
         Session.getCurrentSession().addCallback(sessionCallback);
@@ -52,39 +54,13 @@ public class LoginActivity extends AppCompatActivity {
     private class SessionCallback implements ISessionCallback {
         @Override
         public void onSessionOpened() {
-            KakaoTalkService.getInstance()
-                    .requestProfile(new TalkResponseCallback<KakaoTalkProfile>() {
-                        @Override
-                        public void onNotKakaoTalkUser() {
-                            Log.e("KAKAO_API", "카카오톡 사용자가 아님");
-                        }
-
-                        @Override
-                        public void onSessionClosed(ErrorResult errorResult) {
-                            Log.e("KAKAO_API", "세션이 닫혀 있음: " + errorResult);
-                        }
-
-                        @Override
-                        public void onFailure(ErrorResult errorResult) {
-                            Log.e("KAKAO_API", "카카오톡 프로필 조회 실패: " + errorResult);
-                        }
-
-                        @Override
-                        public void onSuccess(KakaoTalkProfile result) {
-//                            Log.i("KAKAO_API", "카카오톡 닉네임: " + result.getNickName());
-//                            Log.i("KAKAO_API", "카카오톡 프로필이미지: " + result.getProfileImageUrl());
-                            if(nicName==null) {
-                                Intent intent = new Intent(getApplicationContext(), FriendListActivity.class);
-                                intent.putExtra("name", result.getNickName());
-                                intent.putExtra("profile", result.getProfileImageUrl());
-                                nicName=result.getNickName();
-                                startActivity(intent);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                finish();
-                            }
-                        }
-
-                    });
+            if(nicName==null) {
+                Intent intent = new Intent(getApplicationContext(), FriendListActivity.class);
+                nicName="login";
+                startActivity(intent);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                finish();
+            }
         }
 
         @Override
