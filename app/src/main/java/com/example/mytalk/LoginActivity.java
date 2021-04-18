@@ -21,6 +21,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private SessionCallback sessionCallback;
     private String nicName=null;
+    private String errorText="로그인 도중 오류가 발생했습니다. 인터넷 연결을 확인해주세요: ";
 
 
     @Override
@@ -65,7 +66,7 @@ public class LoginActivity extends AppCompatActivity {
 
         @Override
         public void onSessionOpenFailed(KakaoException e) {
-            Toast.makeText(getApplicationContext(), "로그인 도중 오류가 발생했습니다. 인터넷 연결을 확인해주세요: "+e.toString(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), errorText+e.toString(), Toast.LENGTH_SHORT).show();
         }
     }
 }

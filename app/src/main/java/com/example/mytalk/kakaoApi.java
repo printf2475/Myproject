@@ -130,9 +130,9 @@ public class kakaoApi {
         return myProfileImage;
     }
 
-    public void getFriend(){
-
+    public ArrayList getFriend(){
         System.out.println(friends);
+        return friends;
 
     }
 
